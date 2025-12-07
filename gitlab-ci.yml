@@ -1,0 +1,56 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  # Nom de l'image finale
+  IMAGE_NAME: "$CI_REGISTRY_IMAGE/devops-express"
+
+# ================ INPUTS UTILISATEUR (Run Pipeline) ================
+workflow:
+  rules:
+    - when: always
+
+# Ajout d'un champ input visible dans GitLab
+inputs:
+  IMAGE_TAG:
+    type: string
+    description: "Version Docker (format X.Y.Z ex: 1.0.0)"
+    default: "1.0.0"
+    regex: '^[0-9]+\.[0-9]+\.[0-9]+$'
+
+# ================ 1) TESTS ==================
+test:
+  stage: test
+  image: node:20
+  script:
+    - npm install
+    - npm test
+  only:
+    - master
+    - merge_requests
+
+# ================ 2) BUILD DOCKER ================
+build:
+  stage: build
+  image: docker:25
+  services:
+    - docker:25-dind
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" "$CI_REGISTRY"
+    - docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
+  only:
+    - master
+
+# ================ 3) DEPLOY (PUSH IMAGE) ================
+deploy:
+  stage: deploy
+  image: docker:25
+  services:
+    - docker:25-dind
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" "$CI_REGISTRY"
+    - docker push "$IMAGE_NAME:$IMAGE_TAG"
+  only:
+    - master
