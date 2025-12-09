@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
                         align-items: center;
                         height: 100vh;
                         margin: 0;
-                        background: blue;
+                        background: red;
                         font-family: Arial, sans-serif;
                     }
                     h1 {
