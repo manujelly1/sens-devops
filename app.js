@@ -97,7 +97,7 @@ app.get("/", (req, res) => {
                 <div class="circle c2"></div>
 
                 <div class="container">
-                    <h1>Welcome to Devo world</h1>
+                    <h1>Welcome to DevOps world</h1>
                     <p>
                         Automate. Deploy. Scale.  
                         Your CI/CD demonstration starts here 🚀
