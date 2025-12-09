@@ -1,0 +1,52 @@
+name: CI/CD DevOps Express
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Version Docker (format X.Y.Z ex: 1.0.0)"
+        required: true
+        default: "1.0.0"
+
+jobs:
+  # ============================
+  # 1 - TEST NODEJS
+  # ============================
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install deps
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+  # ============================
+  # 2 - BUILD DOCKER
+  # ============================
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    env:
+      IMAGE_NAME: ghcr.io/${{ github.repository }}/devops-express
+      IMAGE_TAG: ${{ github.event.inputs.image_tag }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # Validation du format X.Y.Z
+      - name: Validate version format
+        run: |
+          if [[ ! "$IMAGE_TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "❌ Mauvais format de version: $IMAGE_TAG"
+            exit 1
+          fi
