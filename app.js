@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
                 </style>
             </head>
             <body>
-                <h1>Welcome to DevOps world</h1>
+                <h1>Welcome to DevOps devoteam</h1>
             </body>
         </html>
     `);
