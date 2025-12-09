@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "jest",
-    "vercel-build": "npm test && vercel build"
+    "vercel-build": "npm test"
   },
   "dependencies": {
     "express": "^5.2.1"
