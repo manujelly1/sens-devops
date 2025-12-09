@@ -18,8 +18,8 @@ app.get("/", (req, res) => {
                         justify-content: center;
                         align-items: center;
                         height: 100vh;
-                        background: linear-gradient(135deg, #0a0f24, #122044, #042a2b);
-                    /*    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);*/
+                   /*     background: linear-gradient(135deg, #0a0f24, #122044, #042a2b);*/
+                       background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                         overflow: hidden;
                     }
@@ -98,7 +98,7 @@ app.get("/", (req, res) => {
                 <div class="circle c2"></div>
 
                 <div class="container">
-                    <h1>Welcome to Devoteam</h1>
+                    <h1>Welcome to DevOps world</h1>
                     <p>
                         Automate. Deploy. Scale.  
                         Your CI/CD demonstration starts here 🚀
